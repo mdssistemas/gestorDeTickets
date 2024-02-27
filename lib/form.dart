@@ -135,7 +135,7 @@ class _homeState extends State<home> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.blue,
-                        width: 2.0,
+                        width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -171,7 +171,7 @@ class _homeState extends State<home> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.blue,
-                        width: 2.0,
+                        width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -207,7 +207,7 @@ class _homeState extends State<home> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.blue,
-                        width: 2.0,
+                        width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -288,6 +288,10 @@ class _homeState extends State<home> {
                   ),
                 ),
 
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                ),
+
                 InkWell(
                   onTap: () async {
                     DateTime? fecha = await showDatePicker(
@@ -319,7 +323,7 @@ class _homeState extends State<home> {
                       color: Colors.transparent,
                       border: Border.all(
                         color: Color(0xff3a57e8),
-                        width: 2.0,
+                        width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
