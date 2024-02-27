@@ -9,7 +9,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   String? _selectedValue = null;
-  DateTime desde = DateTime.now();
+  DateTime? desde = null;
 
   @override
   void initState() {
@@ -314,15 +314,36 @@ class _homeState extends State<home> {
                       });
                     }
                   },
-                  child: Text(
-                    'Fecha requerida',
-                    /*DateFormat(DateFormat.YEAR_MONTH_DAY, 'es')
-                        .format(
-                        desde), "${desde.day} / ${desde.month} / ${desde.year}",*/
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: Color(0xff3a57e8),
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_today, // Icono de calendario
+                            color: Color(0xff2124352),
+                          ),
+                          SizedBox(width: 8.0),
+                          Text(
+                            (desde == null) ? "Fecha requerida" : DateFormat(DateFormat.YEAR_MONTH_DAY, 'es').format(desde!),
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 16, color: Color(0xff625d5d)),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
+
+
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
