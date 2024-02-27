@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String? _selectedValue = null;
+  DateTime desde = DateTime.now();
 
   List<DropdownMenuItem<String>> get dropdownItems {
     return [
@@ -139,20 +141,21 @@ class _MyAppState extends State<MyApp> {
                         child: DropdownButtonFormField<String>(
                           value: _selectedValue,
                           items: dropdownItems,
+                          isDense: false,
                           onChanged: (String? value) {
                             setState(() {
                               _selectedValue = value;
                             });
                           },
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                             hintText: _selectedValue == null ? 'Importancia' : null,
                             border: InputBorder.none,
-                            prefixIcon: Padding(
-                              padding: const EdgeInsetsDirectional.only(start: 8.0),
+                            prefixIcon: const Padding(
+                              padding: EdgeInsetsDirectional.only(start: 0),
                               child: Icon(Icons.priority_high, color: Color(0xff2124352), size: 24,),
                             ),
-                            prefixIconConstraints: BoxConstraints(
+                            prefixIconConstraints: const BoxConstraints(
                               minWidth: 40,
                               minHeight: 24,
                             ),
@@ -174,17 +177,18 @@ class _MyAppState extends State<MyApp> {
                         child: DropdownButtonFormField<String>(
                           value: _selectedValue,
                           items: dropdownItems,
+                          isDense: false,
                           onChanged: (String? value) {
                             setState(() {
                               _selectedValue = value;
                             });
                           },
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 10),
                             hintText: _selectedValue == null ? 'Urgencia' : null,
                             border: InputBorder.none,
                             prefixIcon: Padding(
-                              padding: const EdgeInsetsDirectional.only(start: 8.0),
+                              padding: const EdgeInsetsDirectional.only(start: 0),
                               child: Icon(Icons.notification_important, color: Color(0xff2124352), size: 24,),
                             ),
                             prefixIconConstraints: BoxConstraints(
@@ -209,17 +213,18 @@ class _MyAppState extends State<MyApp> {
                         child: DropdownButtonFormField<String>(
                           value: _selectedValue,
                           items: dropdownItems,
+                          isDense: false,
                           onChanged: (String? value) {
                             setState(() {
                               _selectedValue = value;
                             });
                           },
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                             hintText: _selectedValue == null ? 'Impacto' : null,
                             border: InputBorder.none,
                             prefixIcon: Padding(
-                              padding: const EdgeInsetsDirectional.only(start: 8.0),
+                              padding: const EdgeInsetsDirectional.only(start: 0),
                               child: Icon(Icons.warning, color: Color(0xff2124352), size: 24,),
                             ),
                             prefixIconConstraints: BoxConstraints(
@@ -434,6 +439,45 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
+
+                    InkWell(
+                      onTap: () async {
+                        DateTime? fecha = await showDatePicker(
+                          context: context,
+                          initialDate: desde,
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: ColorScheme.light(
+                                  primary: FlutterFlowTheme.of(context)
+                                      .primary,
+                                  onPrimary: Colors.black,
+                                  onSurface: Colors.black,
+                                ),
+                              ),
+                              child: child,
+                            );
+                          },
+                        );
+                        if (fecha != null && fecha != desde) {
+                          setState(() {
+                            desde = fecha;
+                          });
+                        }
+                      },
+                      child: Text(
+                        DateFormat(DateFormat.YEAR_MONTH_DAY, 'es_MX')
+                            .format(
+                            desde), //"${desde.day} / ${desde.month} / ${desde.year}",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.getFont('Poppins',
+                            fontSize: 16, color: Colors.black),
+                      ),
+                    ),
+
+
 
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
