@@ -9,12 +9,25 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   String? _selectedValue = null;
+  String? _selectedValue2 = null;
+  String? _selectedValue3 = null;
+  String? _selectedValueServicio = null;
   DateTime? desde = null;
+
+  var isPressed = false;
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting("es");
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItemsServicio {
+    return [
+      DropdownMenuItem(child: Text('Tecnico'), value: 'TEC'),
+      DropdownMenuItem(child: Text('Supervisor'), value: 'SUP'),
+      DropdownMenuItem(child: Text('Mantenimiento a Vehículos'), value: 'MAN'),
+    ];
   }
 
   List<DropdownMenuItem<String>> get dropdownItems {
@@ -33,11 +46,16 @@ class _homeState extends State<home> {
           elevation:0,
           centerTitle:false,
           automaticallyImplyLeading: false,
-          backgroundColor:Color(0xffee1313),
+          backgroundColor:Color(0xFF031A6B),
           shape:RoundedRectangleBorder(
             borderRadius:BorderRadius.zero,
           ),
-          title: Text('Gestor de tickets'),
+          title: Text(
+              'Registro de solicitud de servicios',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
         ),
 
         body: Padding(
@@ -49,82 +67,39 @@ class _homeState extends State<home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                  child: Text(
-                    'Gestion de tickets',
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22,
-                        color: Color(0xffa80c0c)
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  child:Text(
-                    "Llena los campos para poder proseguir",
-                    textAlign: TextAlign.center,
-                    overflow:TextOverflow.clip,
-                    style:TextStyle(
-                      fontWeight:FontWeight.w400,
-                      fontStyle:FontStyle.normal,
-                      fontSize:14,
-                      color:Color(0xff000000),
-                    ),
-                  ),
-                ),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  child:TextField(
-                    controller: TextEditingController(),
-                    obscureText: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 14,
-                        color: Color(0xff000000)
+                  padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xff05B2DC),
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(
-                            color: Color(0xff0e28b2),
-                            width: 1,
-                          ),
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedValueServicio,
+                      items: dropdownItemsServicio,
+                      isDense: false,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedValueServicio = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        hintText: _selectedValueServicio == null ? 'Tipo de solicitud' : null,
+                        border: InputBorder.none,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 0),
+                          child: Icon(Icons.add_chart, color: Color(0xff212435),size:24),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(
-                            color:Color(0xff0e28b2),
-                            width: 1,
-                          ),
+                        prefixIconConstraints: BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 24,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(
-                            color:Color(0xff3a57e8),
-                            width: 1,
-                          ),
-                        ),
-                        hintText: "Tipo de solicitud",
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xffffffff),
-                        isDense: false,
-                        contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                        prefixIcon: Icon(Icons.add_chart, color: Color(0xff212435),size:24)
+                      ),
                     ),
                   ),
                 ),
@@ -134,7 +109,7 @@ class _homeState extends State<home> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.blue,
+                        color: Color(0xff05B2DC),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
@@ -170,23 +145,23 @@ class _homeState extends State<home> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.blue,
+                        color: Color(0xff05B2DC),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: DropdownButtonFormField<String>(
-                      value: _selectedValue,
+                      value: _selectedValue2,
                       items: dropdownItems,
                       isDense: false,
                       onChanged: (String? value) {
                         setState(() {
-                          _selectedValue = value;
+                          _selectedValue2 = value;
                         });
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        hintText: _selectedValue == null ? 'Urgencia' : null,
+                        hintText: _selectedValue2 == null ? 'Urgencia' : null,
                         border: InputBorder.none,
                         prefixIcon: Padding(
                           padding: const EdgeInsetsDirectional.only(start: 0),
@@ -206,31 +181,89 @@ class _homeState extends State<home> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.blue,
+                        color: Color(0xff05B2DC),
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: DropdownButtonFormField<String>(
-                      value: _selectedValue,
+                      value: _selectedValue3,
                       items: dropdownItems,
                       isDense: false,
                       onChanged: (String? value) {
                         setState(() {
-                          _selectedValue = value;
+                          _selectedValue3 = value;
                         });
                       },
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                        hintText: _selectedValue == null ? 'Impacto' : null,
+                        hintText: _selectedValue3 == null ? 'Impacto' : null,
                         border: InputBorder.none,
                         prefixIcon: Padding(
                           padding: const EdgeInsetsDirectional.only(start: 0),
                           child: Icon(Icons.warning, color: Color(0xff2124352), size: 24,),
                         ),
                         prefixIconConstraints: BoxConstraints(
-                          minWidth: 40, // ajusta este valor según sea necesario
-                          minHeight: 24, // ajusta este valor según sea necesario
+                          minWidth: 40,
+                          minHeight: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      DateTime? fecha = await showDatePicker(
+                        context: context,
+                        initialDate: desde,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: ColorScheme.light(
+                                primary: Color(0xFF031A6B),
+                                onPrimary: Colors.white,
+                                onSurface: Colors.black,
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
+                      if (fecha != null && fecha != desde) {
+                        setState(() {
+                          desde = fecha;
+                        });
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                          color: Color(0xff05B2DC),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today, // Icono de calendario
+                              color: Color(0xff2124352),
+                            ),
+                            SizedBox(width: 8.0),
+                            Text(
+                              (desde == null) ? "Fecha requerida" : DateFormat(DateFormat.YEAR_MONTH_DAY, 'es').format(desde!),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(fontSize: 16, color: Color(0xff212435)),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -254,21 +287,21 @@ class _homeState extends State<home> {
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                              color: Color(0xff3a57e8),
+                              color: Color(0xff05B2DC),
                               width: 1
                           ),
                         ),
@@ -290,72 +323,132 @@ class _homeState extends State<home> {
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                ),
-
-                InkWell(
-                  onTap: () async {
-                    DateTime? fecha = await showDatePicker(
-                      context: context,
-                      initialDate: desde,
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2100),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.light(
-                              primary: Colors.pink,
-                              onPrimary: Colors.black,
-                              onSurface: Colors.black,
+                  child: Stack(
+                    children: [
+                      TextField(
+                        controller: TextEditingController(),
+                        obscureText: false,
+                        textAlign: TextAlign.start,
+                        maxLines: 10,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          color: Color(0xff000000),
+                        ),
+                        decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff05B2DC),
+                              width: 1,
                             ),
                           ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (fecha != null && fecha != desde) {
-                      setState(() {
-                        desde = fecha;
-                      });
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(
-                        color: Color(0xff3a57e8),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.calendar_today, // Icono de calendario
-                            color: Color(0xff2124352),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff05B2DC),
+                              width: 1,
+                            ),
                           ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            (desde == null) ? "Fecha requerida" : DateFormat(DateFormat.YEAR_MONTH_DAY, 'es').format(desde!),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 16, color: Color(0xff625d5d)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Color(0xff05B2DC),
+                                width: 1
+                            ),
                           ),
-                        ],
+                          hintText: "Descripción",
+                          hintStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14,
+                            color: Color(0xff000000),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffffffff),
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        left: 8,  // Ajusta este valor para alinear el ícono a tu gusto
+                        top: 8,  // Ajusta este valor para alinear el ícono a tu gusto
+                        child: Icon(Icons.description, color: Color(0xff2124352), size: 24),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: Stack(
+                    children: [
+                      TextField(
+                        controller: TextEditingController(),
+                        obscureText: false,
+                        textAlign: TextAlign.start,
+                        maxLines: 10,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 14,
+                          color: Color(0xff000000),
+                        ),
+                        decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff05B2DC),
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff05B2DC),
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                                color: Color(0xff05B2DC),
+                                width: 1
+                            ),
+                          ),
+                          hintText: "Condiciones de exito",
+                          hintStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14,
+                            color: Color(0xff000000),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffffffff),
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                        ),
+                      ),
+                      Positioned(
+                        left: 8,  // Ajusta este valor para alinear el ícono a tu gusto
+                        top: 8,  // Ajusta este valor para alinear el ícono a tu gusto
+                        child: Icon(Icons.check, color: Color(0xff2124352), size: 24,),
+                      ),
+                    ],
                   ),
                 ),
 
 
 
-                Padding(
+
+                /*Padding(
                   padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: TextField(
                     controller: TextEditingController(),
                     obscureText: false,
                     textAlign: TextAlign.start,
-                    maxLines: 1,
+                    maxLines: 10,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
@@ -366,21 +459,21 @@ class _homeState extends State<home> {
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                              color: Color(0xff3a57e8),
+                              color: Color(0xff05B2DC),
                               width: 1
                           ),
                         ),
@@ -395,7 +488,7 @@ class _homeState extends State<home> {
                         fillColor: Color(0xffffffff),
                         isDense: false,
                         contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        prefixIcon: Icon(Icons.description, color: Color(0xff2124352), size: 24,)
+                        prefixIcon: Icon(Icons.description, color: Color(0xff2124352), size: 24),
                     ),
                   ),
                 ),
@@ -417,21 +510,21 @@ class _homeState extends State<home> {
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                            color: Color(0xff3a57e8),
+                            color: Color(0xff05B2DC),
                             width: 1,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(
-                              color: Color(0xff3a57e8),
+                              color: Color(0xff05B2DC),
                               width: 1
                           ),
                         ),
@@ -449,13 +542,14 @@ class _homeState extends State<home> {
                         prefixIcon: Icon(Icons.check, color: Color(0xff2124352), size: 24,)
                     ),
                   ),
-                ),
+                ),*/
 
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
                   child: IconButton(
                     icon: Icon(Icons.add_a_photo, color: Color(0xff2124352), size: 24,),
                     iconSize: 50,
+                    color: Color(0xff004385),
                     onPressed: () {},
                   ),
                 ),
@@ -463,7 +557,12 @@ class _homeState extends State<home> {
               ],
             ),
           ),
-        )
+        ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.check, color: Color(0xffffffff)),
+          backgroundColor: Color(0xff004385),
+          onPressed: (){
+          }),
     );
   }
 }
